@@ -30,9 +30,16 @@
 
     <label id="infoLabel">Action label</label><br />
 
-    <input id="ButtonCreateList" type="button" value="Create List" />
-    <input id="ButtonAddFields" type="button" value="Add Fields" />
-    <input id="ButtonAddItem" type="button" value="Add Item" />
-    <input id="ButtonReadItems" type="button" value="Read Items" />
+    <input id="TextBox_NewListName" type="text" value="My Favorite Books" />
+    <input id="Button_NewList" type="button" value="Create List" /><br />
+
+    <input id="TextBox_NewFieldName" type="text" value="ASIN" />
+    <input id="Button_NewField" type="button" value="Add Field" /><br />
+
+    <input id="TextBox_NewItemTitle" type="text" value="Very good title" />
+    <input id="Button_AddItem" type="button" value="Add Item" /><br />
+
+    <input id="Button_FindItems" type="button" value="Find Items" /><br />
+    <label id="searchResults">Search results</label>
 
 </asp:Content>
