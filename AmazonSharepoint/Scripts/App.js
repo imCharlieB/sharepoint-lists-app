@@ -1,20 +1,23 @@
 ﻿
 $(document).ready(function () {
     console.log("Ready for action");
-    //createList();
+
+    newList();
+    //setTimeout(addFields, 3000);
+
     //addField();
     //createListItem();
     //readItems();
-    findLists();
-    $("input[id$='Button_NewList']").click(newList);
-    $("input[id$='Button_NewField']").click(addField);
+    //findLists();
+    //$("input[id$='Button_NewList']").click(newList);
+    //$("input[id$='Button_NewField']").click(addField);
     $("input[id$='Button_AddItem']").click(createListItem);
     $("input[id$='Button_FindItems']").click(findItems);
 });
 
 // Script for creating internal list.
 function newList() {
-    var newlistname = $("#TextBox_NewListName").val();
+    var newlistname = "My Favorite Books";
     var clientContext = SP.ClientContext.get_current();
     var oWebsite = clientContext.get_web();
     var listCreationInfo = new SP.ListCreationInformation();
@@ -22,10 +25,7 @@ function newList() {
     listCreationInfo.set_templateType(SP.ListTemplateType.genericList);
     var oList = oWebsite.get_lists().add(listCreationInfo);
     clientContext.load(oList);
-    clientContext.executeQueryAsync(
-      successHandler,
-       errorHandler
-    );
+    clientContext.executeQueryAsync(successHandler,errorHandler);
     function successHandler() {
         $("#infoLabel").text(newlistname + " list has been created!");
         console.log("List successfully created.");
@@ -37,29 +37,31 @@ function newList() {
 }
 
 // Script for adding field to list.
-function addField() {
-    var newfieldname = $("#TextBox_NewFieldName").val();
-    var newlistname = $("#TextBox_NewListName").val();
+function addFields() {
+    var newfieldname1 = "ASIN";
+    var newfieldname2 = "Description";
+    var newlistname = "My Favorite Books";
     var clientContext = SP.ClientContext.get_current();
     var oWebsite = clientContext.get_web();
     var oList = oWebsite.get_lists().getByTitle(newlistname);
-    var oField = oList.get_fields().addFieldAsXml(
-        "<Field DisplayName='" + newfieldname + "' Type='Text' />",
-        true,
-        SP.AddFieldOptions.defaultValue
-    );
+
+    var oField = oList.get_fields().addFieldAsXml("<Field DisplayName='ASIN' Type='Text' />", true, SP.AddFieldOptions.defaultValue);
     var field = clientContext.castTo(oField, SP.FieldText);
     field.set_required(true);
     field.set_maxLength(100);
     field.update();
     clientContext.load(oField);
-    clientContext.executeQueryAsync(
-      successHandler,
-       errorHandler
-    );
+
+    var oField2 = oList.get_fields().addFieldAsXml("<Field DisplayName='Description' Type='Text' />", true, SP.AddFieldOptions.defaultValue);
+    var field2 = clientContext.castTo(oField2, SP.FieldText);
+    field2.set_maxLength(100);
+    field2.update();
+    clientContext.load(oField2);
+
+    clientContext.executeQueryAsync(successHandler,errorHandler);
     function successHandler() {
-        $("#infoLabel").text("New field added to list: " + newfieldname);
-        console.log("Field successfully added: " + newfieldname);
+        $("#infoLabel").text("New field added to list: " + newfieldname1, newfieldname2);
+        console.log("Field successfully added: " + newfieldname1, newfieldname2);
     }
     function errorHandler() {
         $("#infoLabel").text("Field not added to list!");
@@ -69,15 +71,18 @@ function addField() {
 
 // Script for adding items to list.
 function createListItem() {
-    var newlistname = $("#TextBox_NewListName").val();
+    var newlistname = "My Favorite Books";
     var newItemTitle = $("#TextBox_NewItemTitle").val();
+    var newItemASIN = $("#TextBox_NewItemASIN").val();
+    var newItemDescription = $("#TextBox_NewItemDescription").val();
     var clientContext = SP.ClientContext.get_current();
     var oWebsite = clientContext.get_web();
     var oList = oWebsite.get_lists().getByTitle(newlistname);
     var itemCreateInfo = new SP.ListItemCreationInformation();
     var oListItem = oList.addItem(itemCreateInfo);
     oListItem.set_item("Title", newItemTitle);
-    //oListItem.set_item("MyField", 1);
+    oListItem.set_item("ASIN", newItemASIN);
+    oListItem.set_item("Description", newItemDescription);
     oListItem.update();
     clientContext.load(oListItem);
     clientContext.executeQueryAsync(
@@ -87,6 +92,9 @@ function createListItem() {
     function successHandler() {
         $("#infoLabel").text("New item added to list!");
         console.log("Item successfully added.");
+        $("#TextBox_NewItemTitle").val("");
+        $("#TextBox_NewItemASIN").val("");
+        $("#TextBox_NewItemDescription").val("");
     }
     function errorHandler() {
         $("#infoLabel").text("Problem while adding item.");
@@ -96,7 +104,7 @@ function createListItem() {
 
 // Script for reading list items.
 function findItems() {
-    var newlistname = $("#TextBox_NewListName").val();
+    var newlistname = "My Favorite Books";
     var clientContext = SP.ClientContext.get_current();
     var oWebsite = clientContext.get_web();
     var oList = oWebsite.get_lists().getByTitle(newlistname);
@@ -117,10 +125,10 @@ function findItems() {
         var listItemInfo = "";
         while (listItemEnumerator.moveNext()) {
             var oListItem = listItemEnumerator.get_current();
-                listItemInfo += "ID: " + oListItem.get_id() + "<br/>" +
-                    "Title: " + oListItem.get_item("Title") + "<br/>" +
-                    "ASIN: " + oListItem.get_item("ASIN") + "<br/>";
-            
+            listItemInfo +=
+                "ASIN: " + oListItem.get_item("ASIN") + " - " +
+                "Title: " + oListItem.get_item("Title") + " - " +
+                "Desc: " + oListItem.get_item("Description") + "<br/>";
         }
         $("#searchResults").html("Items read from list:<br>" + listItemInfo);
         console.log("Items successfully read: " + listItemInfo);

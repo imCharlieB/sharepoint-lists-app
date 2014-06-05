@@ -30,13 +30,12 @@
 
     <label id="infoLabel">Action label</label><br />
 
-    <input id="TextBox_NewListName" type="text" value="My Favorite Books" />
-    <input id="Button_NewList" type="button" value="Create List" /><br />
-
-    <input id="TextBox_NewFieldName" type="text" value="ASIN" />
-    <input id="Button_NewField" type="button" value="Add Field" /><br />
-
-    <input id="TextBox_NewItemTitle" type="text" value="Very good title" />
+    <label>Title</label><br />
+    <input id="TextBox_NewItemTitle" type="text" /><br />
+    <label>ASIN</label><br />
+    <input id="TextBox_NewItemASIN" type="text" /><br />
+    <label>Description</label><br />
+    <input id="TextBox_NewItemDescription" type="text" /><br />
     <input id="Button_AddItem" type="button" value="Add Item" /><br />
 
     <input id="Button_FindItems" type="button" value="Find Items" /><br />
