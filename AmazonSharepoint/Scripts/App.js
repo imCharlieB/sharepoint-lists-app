@@ -5,27 +5,25 @@ $(document).ready(function () {
     newList();
     //setTimeout(addFields, 3000);
 
-    //addField();
-    //createListItem();
-    //readItems();
-    //findLists();
-    //$("input[id$='Button_NewList']").click(newList);
-    //$("input[id$='Button_NewField']").click(addField);
     $("input[id$='Button_AddItem']").click(createListItem);
     $("input[id$='Button_FindItems']").click(findItems);
+    $("input[id$='Button_SearchOData']").click(searchAmazon);
+    
 });
+
 
 // Script for creating internal list.
 function newList() {
     var newlistname = "My Favorite Books";
     var clientContext = SP.ClientContext.get_current();
+
     var oWebsite = clientContext.get_web();
     var listCreationInfo = new SP.ListCreationInformation();
     listCreationInfo.set_title(newlistname);
     listCreationInfo.set_templateType(SP.ListTemplateType.genericList);
     var oList = oWebsite.get_lists().add(listCreationInfo);
     clientContext.load(oList);
-    clientContext.executeQueryAsync(successHandler,errorHandler);
+    clientContext.executeQueryAsync(successHandler, errorHandler);
     function successHandler() {
         $("#infoLabel").text(newlistname + " list has been created!");
         console.log("List successfully created.");
@@ -58,7 +56,7 @@ function addFields() {
     field2.update();
     clientContext.load(oField2);
 
-    clientContext.executeQueryAsync(successHandler,errorHandler);
+    clientContext.executeQueryAsync(successHandler, errorHandler);
     function successHandler() {
         $("#infoLabel").text("New field added to list: " + newfieldname1, newfieldname2);
         console.log("Field successfully added: " + newfieldname1, newfieldname2);
@@ -160,4 +158,48 @@ function findLists() {
         $("#infoLabel").text("Problem finding lists: " + arguments[1].get_message());
         console.log("Problem finding lists: " + arguments[1].get_message());
     }
+}
+
+// OData Northwind products calling
+function searchNorthwind() {
+    $.ajax({
+        url: "/AmazonSharepoint/_api/lists/getbytitle('Alphabetical_list_of_products')/items?$top=5&$select=BdcIdentity,ProductID,ProductName",
+        headers: {
+            "accept": "application/json;odata=verbose",
+            "X-RequestDigest": $("#__REQUESTDIGEST").val()
+        },
+        success: function (data) {
+            var items = [];
+            items.push("<table>");
+            items.push("<tr><td>Product ID</td><td>Product Name</td></tr>");
+            $.each(data.d.results, function (key, val) {
+                items.push("<tr id='" + val.BdcIdentity + "'><td>" + val.ProductID + "</td><td>" + val.ProductName + "</td></tr>");
+            });
+            items.push("</table>");
+
+            $("#displayDiv").html(items.join(''));
+        }
+    });
+}
+
+// OData Amazon OData API calling
+function searchAmazon() {
+    var search = $("#TextBox_SearchCriteria").val();
+    $.ajax({
+        url: "http://amazonasintoodata.azurewebsites.net/odata/ProductSearch('" + search + ",Books,1')",
+        headers: {
+            "accept": "application/json;odata=verbose"
+        },
+        success: function (data) {
+            console.log(data.d.results);
+            var items = [];
+            items.push("<table>");
+            items.push("<tr><td>ASIN</td><td>Title</td></tr>");
+            $.each(data.d.results, function (index, value) {
+                items.push("<tr><td>" + value.asin + "</td><td>" + value.title + "</td></tr>");
+            });
+            items.push("</table>");
+            $("#displayDiv").html(items.join(''));
+        }
+    });
 }

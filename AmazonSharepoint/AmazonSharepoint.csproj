@@ -51,6 +51,10 @@
     <None Include="External Content Types\AmazonService\ProductSearch\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{da8f6b63-ebd7-4b48-89a5-603552110953}</SharePointProjectItemId>
     </None>
+    <None Include="External Content Types\Northwind\Alphabetical_list_of_products.ect" />
+    <None Include="External Content Types\Northwind\Alphabetical_list_of_products\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{61bb7d4a-5691-4444-a6e5-86ae8067b52e}</SharePointProjectItemId>
+    </None>
     <None Include="External Content Types\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{65eb8c51-0b5a-4893-a1a9-916677a55bda}</SharePointProjectItemId>
     </None>
@@ -61,6 +65,7 @@
     <Content Include="External Content Types\AmazonService\ProductDetails\Elements.xml" />
     <Content Include="External Content Types\AmazonService\ProductSearch\Elements.xml" />
     <Content Include="External Content Types\Elements.xml" />
+    <Content Include="External Content Types\Northwind\Alphabetical_list_of_products\Elements.xml" />
     <Content Include="Pages\Elements.xml" />
     <Content Include="Pages\Default.aspx" />
   </ItemGroup>

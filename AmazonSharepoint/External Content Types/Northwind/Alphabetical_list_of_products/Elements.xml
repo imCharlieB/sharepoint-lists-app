@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <ListInstance Url="Lists/Alphabetical_list_of_products" Description="Alphabetical_list_of_products" OnQuickLaunch="TRUE" Title="Alphabetical_list_of_products">
+    <DataSource>
+      <Property Name="LobSystemInstance" Value="Northwind" />
+      <Property Name="EntityNamespace" Value="NorthwindModel" />
+      <Property Name="Entity" Value="Alphabetical_list_of_products" />
+      <Property Name="SpecificFinder" Value="ReadSpecificAlphabetical_list_of_product" />
+      <Property Name="MetadataCatalogFileName" Value="BDCMetadata.bdcm" />
+    </DataSource>
+  </ListInstance>
+</Elements>

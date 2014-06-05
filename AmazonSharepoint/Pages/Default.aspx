@@ -30,6 +30,11 @@
 
     <label id="infoLabel">Action label</label><br />
 
+    <label>Search Criteria:</label>
+    <input id="TextBox_SearchCriteria" type="text" />
+    <input id="Button_SearchOData" type="button" value="Search OData" /><br />
+    <label id="displayDiv">Search Results</label><br /><br />
+
     <label>Title</label><br />
     <input id="TextBox_NewItemTitle" type="text" /><br />
     <label>ASIN</label><br />
