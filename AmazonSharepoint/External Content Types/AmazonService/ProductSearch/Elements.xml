@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <ListInstance Url="Lists/ProductSearch" Description="ProductSearch" OnQuickLaunch="TRUE" Title="ProductSearch">
+    <DataSource>
+      <Property Name="LobSystemInstance" Value="AmazonService" />
+      <Property Name="EntityNamespace" Value="AmazonAsinToODataModels" />
+      <Property Name="Entity" Value="ProductSearch" />
+      <Property Name="SpecificFinder" Value="ReadSpecificProductSearch" />
+      <Property Name="MetadataCatalogFileName" Value="BDCMetadata.bdcm" />
+    </DataSource>
+  </ListInstance>
+</Elements>

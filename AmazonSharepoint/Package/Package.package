@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package dslVersion="1.0.0.0" 
+        Id="5789aa33-070d-41f0-a194-c4e90b45fd25" 
+        solutionId="5789aa33-070d-41f0-a194-c4e90b45fd25" 
+        xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel" 
+        name="AmazonSharepoint"
+        sharePointProductVersion="16.0">
+  <features>
+        <featureReference itemId="80845ef6-d2bf-45a4-83bc-5f6e4541246b" />
+  </features>
+</package>
