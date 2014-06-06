@@ -1,16 +1,13 @@
 ﻿
 $(document).ready(function () {
     console.log("Ready for action");
-
     newList();
-    //setTimeout(addFields, 3000);
 
     $("input[id$='Button_AddItem']").click(createListItem);
     $("input[id$='Button_FindItems']").click(findItems);
     $("input[id$='Button_SearchOData']").click(searchAmazon);
     
 });
-
 
 // Script for creating internal list.
 function newList() {
@@ -25,6 +22,7 @@ function newList() {
     clientContext.load(oList);
     clientContext.executeQueryAsync(successHandler, errorHandler);
     function successHandler() {
+        $.when(successHandler).done(addFields);
         $("#infoLabel").text(newlistname + " list has been created!");
         console.log("List successfully created.");
     }
@@ -32,6 +30,7 @@ function newList() {
         $("#infoLabel").text("<My Favorite Books> list already exist!");
         console.log("List already created, not creating new one.");
     }
+    
 }
 
 // Script for adding field to list.
@@ -191,7 +190,6 @@ function searchAmazon() {
             "accept": "application/json;odata=verbose"
         },
         success: function (data) {
-            console.log(data.d.results);
             var items = [];
             items.push("<table>");
             items.push("<tr><td>ASIN</td><td>Title</td></tr>");
@@ -203,3 +201,4 @@ function searchAmazon() {
         }
     });
 }
+
